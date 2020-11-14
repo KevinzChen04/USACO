@@ -54,10 +54,7 @@ public class export {
 				areaSol = 0;
 				perimeterSol = 0;
 				if(area[i][j] == false && grid[i][j] == 1) {
-					findArea(i, j);
-				}
-				if(perimeter[i][j] == false && grid[i][j] == 1) {
-					findPerimeter(i, j);
+					findAreaAndPerimeter(i, j);
 				}
 				if(max.x < areaSol) {
 					max.changeArea(areaSol);
@@ -118,6 +115,27 @@ public class export {
 			if(possible) {
 				if(perimeter[x + switchx][y + switchy] == false && grid[x + switchx][y + switchy] == 1) {
 					findPerimeter(x + switchx, y + switchy);				
+				}
+			}
+		}
+	}
+	public static void findAreaAndPerimeter(int x, int y) {
+		area[x][y] = true;
+		areaSol++;
+		for(int i = 0; i < 4; i++) {
+			int switchx = x + rotatex[i];
+			int switchy = y + rotatey[i];
+			boolean possible = true;
+			if(switchx < 0 || switchy < 0 || switchx == n || switchy == n) {
+				perimeterSol++;
+				possible = false;
+			}
+			if(possible) {
+				if(grid[switchx][switchy] == 0) {
+					perimeterSol++;
+				}
+				if(area[switchx][switchy] == false && grid[switchx][switchy] == 1) {
+					findAreaAndPerimeter(switchx, switchy);
 				}
 			}
 		}
