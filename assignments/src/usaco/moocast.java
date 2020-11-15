@@ -1,6 +1,7 @@
+package usaco;
 import java.util.*;
 import java.io.*;
-public class export {
+public class moocast {
 	public static int n;
 	public static class triple{
 		int x;
@@ -13,9 +14,9 @@ public class export {
 		}
 	}
 	public static void main(String[] args) throws IOException{
-		BufferedReader infile = new BufferedReader(new FileReader("moocast.in"));
+		BufferedReader infile = new BufferedReader(new FileReader("data/usacoData/moocast/moocast.in"));
 		StringTokenizer st = new StringTokenizer(infile.readLine());
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("moocast.out")));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("data/usacoData/moocast/moocast.out")));
 		n = Integer.parseInt(st.nextToken());
 		ArrayList<Integer>[] map = new ArrayList[n];
 		triple[] cows = new triple[n];
