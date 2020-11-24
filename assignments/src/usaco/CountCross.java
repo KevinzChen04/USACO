@@ -1,6 +1,7 @@
+package usaco;
 import java.util.*;
 import java.io.*;
-public class export {
+public class CountCross {
 	static final int[] rotatex = {-1,0,1,0};
 	static final int[] rotatey = {0,1,0,-1};
 	static int n = 0;
@@ -36,9 +37,9 @@ public class export {
 		}
 	}
 	public static void main(String[] args) throws IOException{
-		BufferedReader infile = new BufferedReader(new FileReader("countcross.in"));
+		BufferedReader infile = new BufferedReader(new FileReader("data/usacoData/CountCross/CountCross.in"));
 		StringTokenizer st = new StringTokenizer(infile.readLine());
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("countcross.out")));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("data/usacoData/CountCross/CountCross.out")));
 		n = Integer.parseInt(st.nextToken());
 		k = Integer.parseInt(st.nextToken());
 		r = Integer.parseInt(st.nextToken());
