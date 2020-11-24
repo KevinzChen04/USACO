@@ -91,16 +91,16 @@ public class CountCross {
 			pair current = new pair(newX, newY);
 			pairOfPair temp = new pairOfPair(past, current);
 			boolean wall = false;
-			for(pairOfPair j : walls) {
-				if(temp.equalTo(j)) {
-					wall = true;
-				}
-			}
 			if(newX == -1 || newX == n || newY == -1 || newY == n) {
 				continue;
 			}
-			else if(grid[newX][newY] == 0 && !wall) {
-				fill(newX, newY);
+			else if(grid[newX][newY] == 0) {
+				for(pairOfPair j : walls) {
+					if(temp.equalTo(j)) {
+						wall = true;
+					}
+				}
+				if(!wall) fill(newX, newY);
 			}
 		}
 	}
