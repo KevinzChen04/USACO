@@ -1,14 +1,15 @@
+package usaco;
 import java.util.*;
 import java.io.*;
-public class export {
+public class Convention {
 	static int n = 0;
 	static int m = 0;
 	static int c = 0;
 	static int[] cows;
 	public static void main(String[] args) throws IOException{
-		BufferedReader infile = new BufferedReader(new FileReader("convention.in"));
+		BufferedReader infile = new BufferedReader(new FileReader("data/usacoData/Convention/convention.in"));
 		StringTokenizer st = new StringTokenizer(infile.readLine());
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("convention.out")));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("data/usacoData/Convention/convention.out")));
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
 		c = Integer.parseInt(st.nextToken());
@@ -18,7 +19,6 @@ public class export {
 			cows[i] = Integer.parseInt(st.nextToken());
 		}
         Arrays.sort(cows);
-        int max = cows.length - 1;
         int bot = 0;
         int top = cows[cows.length - 1];
         int sol = Integer.MAX_VALUE;
