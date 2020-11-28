@@ -22,11 +22,11 @@ public class export {
         int bot = 0;
         int top = cows[cows.length - 1];
         int sol = Integer.MAX_VALUE;
-        while(top >= bot) {
+        while(top > bot) {
         	int middle = (top + bot) / 2;
         	int check = works(middle);
         	if(check > 0) {
-        		top = middle - 1;
+        		top = middle;
         		if(sol > check) {
         			sol = check;
         		}
@@ -46,31 +46,33 @@ public class export {
 	}
     public static int works(int waitingTime) {
 		int counter = 0;
-		for(int i = 0; i < m; i++) {
-			int temp = counter;
-			for(int j = 1; j < c; j++) {
-				temp++;
-				if(temp == cows.length) {
-					counter = cows.length;
-					break;
+		int buses = m;
+		while(true) {
+			if(counter == cows.length) return waitingTime;
+			if(buses == 0) {
+				break;
+			}
+			int over = 0;
+			if(counter + c - 1 >= n) {
+				over = n - counter;
+			}
+			else {
+				over = c;
+			}
+			int temp = 1;
+			for(int i = 1; i < over; i++) {
+				temp = i;
+				if(cows[counter + i] - cows[counter] <= waitingTime) {
+					continue;
 				}
 				else {
-					if(cows[temp] - cows[counter] <= waitingTime) {
-						continue;
-					}
-					else {
-						temp--;
-						break;
-					}
+					temp--;
+					break;
 				}
 			}
-			counter = temp + 1;
+			counter += temp + 1;
+			buses--;
 		}
-		if(counter == n) {
-			return waitingTime;
-		}
-		else {
-			return -1;
-		}
+		return -1;
 	}
 }
