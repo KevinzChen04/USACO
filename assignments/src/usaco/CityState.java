@@ -1,10 +1,11 @@
+package usaco;
 import java.util.*;
 import java.io.*;
-public class export {
-	public static void main(String[] args) throws IOException{
-		BufferedReader in = new BufferedReader(new FileReader("citystate.in"));
+public class CityState {
+	public static void main(String[] args) throws IOException {
+		BufferedReader in = new BufferedReader(new FileReader("data/usacoData/cityState/citystate.in"));
 		StringTokenizer st = new StringTokenizer(in.readLine());
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("citystate.out")));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("data/usacoData/cityState/citystate.out")));
 		int n = Integer.parseInt(st.nextToken());
 		Map<String, Integer> cityStates = new HashMap<>();
 		for(int i = 0; i < n; i++) {
