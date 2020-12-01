@@ -1,10 +1,12 @@
+package usaco;
 import java.util.*;
 import java.io.*;
-public class export {
+public class Shuffle {
+
 	public static void main(String[] args) throws IOException{
-		BufferedReader in = new BufferedReader(new FileReader("shuffle.in"));
+		BufferedReader in = new BufferedReader(new FileReader("data/usacoData/shuffle/shuffle.in"));
 		StringTokenizer st = new StringTokenizer(in.readLine());
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("shuffle.out")));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("data/usacoData/shuffle/shuffle.out")));
 		int n = Integer.parseInt(st.nextToken());
 		Map<Integer, Integer> shuffle = new HashMap<Integer, Integer>();
 		Set<Integer> cycle = new HashSet<Integer>();
