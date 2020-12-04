@@ -30,7 +30,7 @@ public class export {
 			st = new StringTokenizer(in.readLine());
 			int ki = Integer.parseInt(st.nextToken());
 			int vi = Integer.parseInt(st.nextToken()) - 1;
-			PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+			LinkedList<Integer> pq = new LinkedList<Integer>();
 			boolean[] visited = new boolean[n];
 			visited[vi] = true;
 			int sol = 0;
