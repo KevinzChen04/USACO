@@ -1,14 +1,15 @@
+package usaco;
 import java.util.*;
 import java.io.*;
-public class export {
+public class Mootube {
 	static int n;
 	static int q;
 	static int[][] relavance;
 	static ArrayList<Integer>[] adjList;
 	public static void main(String[] args) throws IOException{
-		BufferedReader in = new BufferedReader(new FileReader("mootube.in"));
+		BufferedReader in = new BufferedReader(new FileReader("data/usacoData/mootube/mootube.in"));
 		StringTokenizer st = new StringTokenizer(in.readLine());
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("mootube.out")));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("data/usacoData/mootube/mootube.out")));
 		n = Integer.parseInt(st.nextToken());
 		q = Integer.parseInt(st.nextToken());
 		relavance = new int[n][n];
