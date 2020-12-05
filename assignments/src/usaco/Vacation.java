@@ -1,11 +1,12 @@
+package usaco;
 import java.util.*;
 import java.io.*;
-public class export {
+public class Vacation {
 	static int inf = 9999999;
 	public static void main(String[] args) throws IOException{
-		BufferedReader in = new BufferedReader(new FileReader("vacation.in"));
+		BufferedReader in = new BufferedReader(new FileReader("data/usacoData/vacation/vacation.in"));
 		StringTokenizer st = new StringTokenizer(in.readLine());
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("vacation.out")));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("data/usacoData/vacation/vacation.out")));
 		int n = Integer.parseInt(st.nextToken());
 		int m = Integer.parseInt(st.nextToken());
 		int k = Integer.parseInt(st.nextToken());
