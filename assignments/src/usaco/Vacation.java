@@ -2,7 +2,7 @@ package usaco;
 import java.util.*;
 import java.io.*;
 public class Vacation {
-	static int inf = 9999999;
+	static int inf = 999999999;
 	public static void main(String[] args) throws IOException{
 		BufferedReader in = new BufferedReader(new FileReader("data/usacoData/vacation/vacation.in"));
 		StringTokenizer st = new StringTokenizer(in.readLine());
@@ -35,7 +35,7 @@ public class Vacation {
 			}
 		}
 		int possible = 0;
-		int total = 0;
+		Long total = 0L;
 		for(int i = 0; i < q; i++) {
 			st = new StringTokenizer(in.readLine());
 			int farmOne = Integer.parseInt(st.nextToken()) - 1;
