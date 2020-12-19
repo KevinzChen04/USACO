@@ -1,6 +1,7 @@
-import java.util.*;
+package usaco;
 import java.io.*;
-public class export {
+import java.util.*;
+public class Socdist {
 	long start;
 	long end;
 	static int n;
@@ -8,10 +9,11 @@ public class export {
 	static long smallest;
 	static long largest;
 	static TreeMap<Long, Long> fields;
+
 	public static void main(String[] args) throws IOException{
-		BufferedReader in = new BufferedReader(new FileReader("socdist.in"));
+		BufferedReader in = new BufferedReader(new FileReader("data/usacoData/socdist/socdist.in"));
 		StringTokenizer st = new StringTokenizer(in.readLine());
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("socdist.out")));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("data/usacoData/socdist/socdist.out")));
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
 		smallest = Long.MAX_VALUE;
