@@ -1,6 +1,7 @@
+package usaco;
 import java.util.*;
 import java.io.*;
-public class export {
+public class Convention2 {
 	public static class Pair{
 		int arrival;
 		long time;
@@ -9,10 +10,10 @@ public class export {
 			this.time = time;
 		}
 	}
-	public static void main(String[] args) throws IOException{
-		BufferedReader in = new BufferedReader(new FileReader("convention2.in"));
+	public static void main(String[] args)throws IOException{
+		BufferedReader in = new BufferedReader(new FileReader("data/usacoData/convention2/convention2.in"));
 		StringTokenizer st = new StringTokenizer(in.readLine());
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("convention2.out")));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("data/usacoData/convention2/convention2.out")));
 		int n = Integer.parseInt(st.nextToken());
 		ArrayList<Pair> q = new ArrayList<Pair>();
 		long waitingMax = Long.MIN_VALUE;
