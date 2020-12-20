@@ -36,14 +36,18 @@ public class Socdist {
 		long mid = 0;
 		while(top > bot) {
 			mid = (top + bot) / 2;
-			if(check(mid)) {
-				bot = mid + 1;
+			boolean temp = check(mid);
+			if(bot == mid && temp) {
+				out.println(bot);
+				break;
+			}
+			if(temp) {
+				bot = mid;
 			}
 			else {
-				top = mid - 1;
+				top = mid;
 			}
 		}
-		out.println(top);
 		in.close();
 		out.close();
 	}
