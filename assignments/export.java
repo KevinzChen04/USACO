@@ -3,17 +3,29 @@ import java.io.*;
 public class export {
 	static int n;
 	static int l;
+	static int[] w;
+	static int[] x;
+	static int[] d;
+	
 	static long t;
 	static double average;
 	static TreeMap<Integer, Integer> positive;
 	static TreeMap<Integer, Integer> negative;
 	static TreeMap<Integer, Integer> position;
-	static class Pair {
+	
+	static class Pair implements Comparable<Pair>{
+		int time;
 		int weight;
-		int direction;
 		Pair(int a, int b){
-			weight = a;
-			direction = b;
+			time = a;
+			weight = b;
+		}
+		@Override
+		public int compareTo(Pair o) {
+			if(time > o.time) {
+				return 1;
+			}
+			return -1;
 		}
 	}
 	public static void main(String[] args) throws IOException{
@@ -22,39 +34,52 @@ public class export {
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("meetings.out")));
 		n = Integer.parseInt(st.nextToken());
 		l = Integer.parseInt(st.nextToken());
+		w = new int[n];
+		x = new int[n];
+		d = new int[n];
 		positive = new TreeMap<Integer, Integer>(); 
 		negative = new TreeMap<Integer, Integer>(); 
 		position = new TreeMap<Integer, Integer>(); 
-		long totalWeight = 0;
+		int totalWeight = 0;
 		for(int i = 0; i < n; i++) {
 			st = new StringTokenizer(in.readLine());
-			int w = Integer.parseInt(st.nextToken());
-			int x = Integer.parseInt(st.nextToken());
-			int d = Integer.parseInt(st.nextToken());
-			if(d == 1) {
-				positive.put(x, w);
+			w[i] = Integer.parseInt(st.nextToken());
+			x[i] = Integer.parseInt(st.nextToken());
+			d[i] = Integer.parseInt(st.nextToken());
+			if(d[i] == 1) {
+				positive.put(x[i], w[i]);
 			}
 			else {
-				negative.put(x, w);
+				negative.put(x[i], w[i]);
 			}
-			position.put(x, w);
-			totalWeight += w;
+			position.put(x[i], w[i]);
+			totalWeight += w[i];
 		}
 		average = totalWeight / (double) 2;
 		getTime();
 		long col = 0;
-		for(int i : positive.keySet()) {
-			for(int j : negative.keySet()) {
-				if(i < j && i + 2 * t > j) {
-					col++;
-				}
-			}
+		Pair[] sorted = new Pair[n];
+		TreeSet<Integer> q = new TreeSet<Integer>();
+		for(int i = 0; i < n; i++) {
+			sorted[i] = new Pair(x[i], d[i]);
 		}
-		out.println(col);
+		Arrays.sort(sorted);
+		for(int i = 0; i < n; i++) {
+			if(sorted[i].weight == -1) {
+				while(q.size() > 0 && q.first() + 2 * t < sorted[i].time) {
+					q.remove(q.first());
+				}
+				col += q.size();
+			}
+			else {
+				q.add(sorted[i].time);
+			}
+		}	
+		out.print(col);
 		in.close();
 		out.close();
 	}
-	public static void getTime() {
+	public static int getTime() {
 		long[] positiveTime = new long[negative.size()];
 		long[] negativeTime = new long[positive.size()];
 		int counter = 0;
@@ -99,5 +124,6 @@ public class export {
 				positionClone.remove(positionClone.firstKey());
 			}
 		}
+		return 0;
 	}
 }
