@@ -1,10 +1,11 @@
+package usaco;
 import java.util.*;
 import java.io.*;
-public class export {
-	public static void main(String[] args) throws IOException{
-		BufferedReader in = new BufferedReader(new FileReader("homework.in"));
+public class Homework {
+	public static void main(String[] args) throws IOException {
+		BufferedReader in = new BufferedReader(new FileReader("data/usacoData/homework/homework.in"));
 		StringTokenizer st = new StringTokenizer(in.readLine());
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("homework.out")));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("data/usacoData/homework/homework.out")));
 		int n = Integer.parseInt(st.nextToken());
 		int[] scores = new int[n];
 		st = new StringTokenizer(in.readLine());
