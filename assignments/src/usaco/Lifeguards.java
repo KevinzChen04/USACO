@@ -1,6 +1,7 @@
-import java.util.*;
+package usaco;
 import java.io.*;
-public class export {
+import java.util.*;
+public class Lifeguards {
 	static class State implements Comparable<State> {
 		public int time, index;
 		public State(int a, int b) {
