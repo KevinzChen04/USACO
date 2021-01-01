@@ -1,14 +1,15 @@
+package usaco;
 import java.util.*;
 import java.io.*;
-public class export {
+public class Planting {
 	static int n;
 	static ArrayList<Integer>[] fields;
 	static int[] type;
 	static int max = 0;
-	public static void main(String[] args) throws IOException {
-		BufferedReader in = new BufferedReader(new FileReader("planting.in"));
+	public static void main(String[] args)throws IOException{
+		BufferedReader in = new BufferedReader(new FileReader("data/usacoData/planting/planting.in"));
 		StringTokenizer st = new StringTokenizer(in.readLine());
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("planting.out")));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("data/usacoData/planting/planting.out")));
 		n = Integer.parseInt(st.nextToken());
 		fields = new ArrayList[n];
 		for(int i = 0; i < n; i++) {
@@ -54,3 +55,4 @@ public class export {
 		}
 	}
 }
+
