@@ -1,12 +1,13 @@
+package usaco;
 import java.util.*;
 import java.io.*;
-public class export {
+public class Herding {
 	static int n;
 	static ArrayList<Integer> cow = new ArrayList<Integer>();
-	public static void main(String[] args) throws IOException {
-		BufferedReader in = new BufferedReader(new FileReader("herding.in"));
+	public static void main(String[] args)throws IOException{
+		BufferedReader in = new BufferedReader(new FileReader("data/usacoData/herding/herding.in"));
 		StringTokenizer st = new StringTokenizer(in.readLine());
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("herding.out")));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("data/usacoData/herding/herding.out")));
 		n = Integer.parseInt(st.nextToken());
 		for(int i = 0; i < n; i++) {
 			st = new StringTokenizer(in.readLine());
