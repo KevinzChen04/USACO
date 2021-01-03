@@ -1,13 +1,14 @@
+package usaco;
 import java.util.*;
 import java.io.*;
-public class export {
+public class Loan {
 	static long n;
 	static long k;
 	static long m;
-	public static void main(String[] args) throws IOException {
-		BufferedReader in = new BufferedReader(new FileReader("loan.in"));
+	public static void main(String[] args)throws IOException{
+		BufferedReader in = new BufferedReader(new FileReader("data/usacoData/loan/loan.in"));
 		StringTokenizer st = new StringTokenizer(in.readLine());
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("loan.out")));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("data/usacoData/loan/loan.out")));
 		n = Long.parseLong(st.nextToken());
 		k = Long.parseLong(st.nextToken());
 		m = Long.parseLong(st.nextToken());
@@ -31,14 +32,14 @@ public class export {
 		}
 		if(check) {
 			if(check(top)) {
-				out.println(top);
+				System.out.println(top);
 			}
 			else {
-				out.println(bot);
+				System.out.println(bot);
 			}
 		}
 		else{
-			out.println(top);
+			System.out.println(top);
 		}
 		in.close();
 		out.close();
