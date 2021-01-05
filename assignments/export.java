@@ -1,67 +1,47 @@
 import java.util.*;
 import java.io.*;
 public class export {
-	static long n;
-	static long k;
-	static long m;
-	public static void main(String[] args) throws IOException {
-		BufferedReader in = new BufferedReader(new FileReader("loan.in"));
+	static int n;
+	static ArrayList<Pair> points = new ArrayList<Pair>();
+	public static void main(String[] args)throws IOException{
+		BufferedReader in = new BufferedReader(new FileReader("triangles.in"));
 		StringTokenizer st = new StringTokenizer(in.readLine());
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("loan.out")));
-		n = Long.parseLong(st.nextToken());
-		k = Long.parseLong(st.nextToken());
-		m = Long.parseLong(st.nextToken());
-		long top = n;
-		long bot = 1;
-		boolean check = false;
-		while(top > bot) {
-			long preTop = top;
-			long preBot = bot;
-			long mid = (top + bot) / 2;
-			if(check(mid)) {
-				bot = mid;
-			}
-			else {
-				top = mid;
-			}
-			if(preTop == top && preBot == bot) {
-				check = true;
-				break;
-			}
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("triangles.out")));
+		n = Integer.parseInt(st.nextToken());
+		long mod = (long) (Math.pow(10, 9) + 7);
+		long sol = 0;
+		for(int i = 0; i < n; i++) {
+			st = new StringTokenizer(in.readLine());
+			long tempx = Long.parseLong(st.nextToken());
+			long tempy = Long.parseLong(st.nextToken());
+			points.add(new Pair(tempx, tempy));
 		}
-		if(check) {
-			if(check(top)) {
-				out.println(top);
+		for(int i = 0; i < n; i++) {
+			long xsum = 0;
+			long ysum = 0;
+			for(int j = 0; j < n; j++) {
+				if(i == j) {
+					continue;
+				}
+				if(points.get(j).f == points.get(i).f) {
+					xsum += Math.abs(points.get(j).s - points.get(i).s);
+				}
+				if(points.get(j).s == points.get(i).s) {
+					ysum += Math.abs(points.get(j).f - points.get(i).f);
+				}
 			}
-			else {
-				out.println(bot);
-			}
+			sol += xsum * ysum;
 		}
-		else{
-			out.println(top);
-		}
+		out.println(sol % mod);
 		in.close();
 		out.close();
 	}
-	public static boolean check(long x) {
-		long g = 0;
-		long days = 0;
-		long y = n / x;
-		while(m < y && days != k && g < n) {
-			y = (n - g) / x;
-			long next = n - x * y;
-			long maxTime = (next - g) / y + 1;
-			if(maxTime + days > k) {
-				maxTime = k - days;
-			}
-			days += maxTime;
-			g += y * maxTime;
+	public static class Pair{
+		long f;
+		long s;
+		public Pair(long x, long y) {
+			this.f = x;
+			this.s = y;
 		}
-		double temp = (n - g) / (double)m;
-		long time = (long) Math.ceil(temp);
-		if(time + days <= k) {
-			return true;
-		}
-		return false;
 	}
 }
