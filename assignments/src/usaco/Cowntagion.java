@@ -15,6 +15,7 @@ public class Cowntagion {
 			int from = Integer.parseInt(st.nextToken()) - 1;
 			int to = Integer.parseInt(st.nextToken()) - 1;
 			grid[from].add(to);
+			grid[to].add(from);
 		}
 		long days = 0;
 		LinkedList<Integer> q = new LinkedList<Integer>();

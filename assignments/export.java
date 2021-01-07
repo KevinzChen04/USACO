@@ -1,47 +1,45 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 public class export {
-	static int n;
-	static ArrayList<Pair> points = new ArrayList<Pair>();
-	public static void main(String[] args)throws IOException{
-		BufferedReader in = new BufferedReader(new FileReader("triangles.in"));
+	public static void main(String[] args) throws IOException{
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(in.readLine());
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("triangles.out")));
-		n = Integer.parseInt(st.nextToken());
-		long mod = (long) (Math.pow(10, 9) + 7);
-		long sol = 0;
+		int n = Integer.parseInt(st.nextToken());
+		ArrayList[] grid = new ArrayList[n];
 		for(int i = 0; i < n; i++) {
-			st = new StringTokenizer(in.readLine());
-			long tempx = Long.parseLong(st.nextToken());
-			long tempy = Long.parseLong(st.nextToken());
-			points.add(new Pair(tempx, tempy));
+			grid[i] = new ArrayList<Long>();
 		}
-		for(int i = 0; i < n; i++) {
-			long xsum = 0;
-			long ysum = 0;
-			for(int j = 0; j < n; j++) {
-				if(i == j) {
-					continue;
-				}
-				if(points.get(j).f == points.get(i).f) {
-					xsum += Math.abs(points.get(j).s - points.get(i).s);
-				}
-				if(points.get(j).s == points.get(i).s) {
-					ysum += Math.abs(points.get(j).f - points.get(i).f);
+		for(int i = 0; i < n - 1; i++) {
+			st = new StringTokenizer(in.readLine());
+			int from = Integer.parseInt(st.nextToken()) - 1;
+			int to = Integer.parseInt(st.nextToken()) - 1;
+			grid[from].add(to);
+			grid[to].add(from);
+		}
+		long days = 0;
+		LinkedList<Integer> q = new LinkedList<Integer>();
+		q.add(0);
+		boolean[] visited = new boolean[n];
+		visited[0] = true;
+		while(q.size() > 0) {
+			int node = q.remove();
+			long temp = 0;
+			for(int i = 0; i < grid[node].size(); i++) {
+				int next = (int) grid[node].get(i);
+				if(!visited[next]) {
+					temp++;
+					days++;
+					q.add(next);
+					visited[next] = true;
 				}
 			}
-			sol += xsum * ysum;
+			long sick = 1;
+			while(sick < temp + 1) {
+				sick *= 2;
+				days++;
+			}
 		}
-		out.println(sol % mod);
+		System.out.println(days);
 		in.close();
-		out.close();
-	}
-	public static class Pair{
-		long f;
-		long s;
-		public Pair(long x, long y) {
-			this.f = x;
-			this.s = y;
-		}
 	}
 }
