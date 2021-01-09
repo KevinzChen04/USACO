@@ -1,10 +1,11 @@
-import java.io.*;
+package usaco;
 import java.util.*;
-public class export {
+import java.io.*;
+public class Haybales {
 	public static void main(String[] args)throws IOException{
-		BufferedReader in = new BufferedReader(new FileReader("haybales.in"));
+		BufferedReader in = new BufferedReader(new FileReader("data/usacoData/haybales/haybales.in"));
 		StringTokenizer st = new StringTokenizer(in.readLine());
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("haybales.out")));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("data/usacoData/haybales/haybales.out")));
 		int n = Integer.parseInt(st.nextToken());
 		int q = Integer.parseInt(st.nextToken());
 		TreeSet<Integer> cows = new TreeSet<Integer>();
