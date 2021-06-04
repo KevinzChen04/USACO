@@ -1,66 +1,109 @@
 import java.io.*;
 import java.util.*;
 public class export {
-	public static HashSet[] beenThere;
 	public static int n;
-	public static int k;
-	public static int[] visited;
-	public static int[] cows;
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) throws IOException{
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader in = new BufferedReader(new FileReader("triangles.in"));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("triangles.out")));
 		StringTokenizer st = new StringTokenizer(in.readLine());
 		n = Integer.parseInt(st.nextToken());
-		k = Integer.parseInt(st.nextToken());
-		beenThere = new HashSet[n];
-		visited = new int[n];
-		cows = new int[n];
-		for(int i = 0; i < n; i++) {
-			beenThere[i] = new HashSet<Integer>();
-			beenThere[i].add(i);
-			cows[i] = i;
+		ArrayList<Pair> xpoints = new ArrayList<Pair>();
+		ArrayList<Pair> ypoints = new ArrayList<Pair>();
+		long mod = (long) (Math.pow(10, 9) + 7);
+		long sol = 0;
+		long[][] grid = new long[20001][20001];
+		ArrayList[] hasYcoordinate = new ArrayList[20001];
+		ArrayList[] hasXcoordinate = new ArrayList[20001];
+		for(int i = 0; i < 20001; i++) {
+			hasXcoordinate[i] = new ArrayList<Integer>();
+			hasYcoordinate[i] = new ArrayList<Integer>();
 		}
-		for(int i = 0; i < k; i++) {
+		for(int i = 0; i < n; i++) {
 			st = new StringTokenizer(in.readLine());
-			int x = Integer.parseInt(st.nextToken()) - 1;
-			int y = Integer.parseInt(st.nextToken()) - 1;
-			beenThere[cows[x]].add(y);
-			beenThere[cows[y]].add(x);
-			int temp = cows[x];
-			cows[x] = cows[y];
-			cows[y] = temp;
+			int tempx = Integer.parseInt(st.nextToken());
+			int tempy = Integer.parseInt(st.nextToken());
+			xpoints.add(new Pair(tempx, tempy));
+			ypoints.add(new Pair(tempy, tempx));
 		}
+		Collections.sort(ypoints);
+		Collections.sort(xpoints);
 		for(int i = 0; i < n; i++) {
-			if(cows[i] == i) {
-				visited[i] = beenThere[i].size();
-				continue;
+			hasYcoordinate[convert(xpoints.get(i).s)].add(convert(xpoints.get(i).f));
+			hasXcoordinate[convert(ypoints.get(i).s)].add(convert(ypoints.get(i).f));
+		}
+		for(int i = 0; i < 20001; i++) {
+			long[] row = new long[hasYcoordinate[i].size()];
+			for(int j = 0; j < hasYcoordinate[i].size(); j++) {
+				if(hasYcoordinate[i].size() == 1) {
+					break;
+				}
+				if(row[0] == 0) {
+					long sum = 0;
+					for(int k = 0; k < hasYcoordinate[i].size(); k++) {
+						sum += Math.abs(unconvert((int)hasYcoordinate[i].get(j)) - unconvert((int)hasYcoordinate[i].get(k)));
+					}
+					row[0] = sum;
+					grid[i][(int) hasYcoordinate[i].get(j)] = row[0];
+				}
+				else {
+					row[j] = row[j - 1] + (2*j - hasYcoordinate[i].size()) * ((int)Math.abs(unconvert((int)hasYcoordinate[i].get(j)) - unconvert((int)hasYcoordinate[i].get(j - 1))));
+					grid[i][(int) hasYcoordinate[i].get(j)] = row[j];
+				}
 			}
 		}
-		for(int i = 0; i < n; i++) {
-			if(visited[i] == 0) {
-				HashSet<Integer> there = new HashSet<Integer>();
-				there.add(i);
-				dfs(i, there);
+		for(int i = 0; i < 20001; i++) {
+			long[] row = new long[hasXcoordinate[i].size()];
+			for(int j = 0; j < hasXcoordinate[i].size(); j++) {
+				if(hasXcoordinate[i].size() == 1) {
+					break;
+				}
+				if(row[0] == 0) {
+					long sum = 0;
+					for(int k = 0; k < hasXcoordinate[i].size(); k++) {
+						sum += Math.abs(unconvert((int)hasXcoordinate[i].get(j)) - unconvert((int)hasXcoordinate[i].get(k)));
+					}
+					row[0] = sum;
+					sol += grid[(int) hasXcoordinate[i].get(j)][i] * row[0];
+				}
+				else {
+					row[j] = row[j - 1] + (2*j - hasXcoordinate[i].size()) * ((int)Math.abs(unconvert((int)hasXcoordinate[i].get(j)) - unconvert((int)hasXcoordinate[i].get(j - 1))));
+					sol += grid[(int) hasXcoordinate[i].get(j)][i] * row[j];
+				}
 			}
 		}
-		for(int i : visited) {
-			System.out.println(i);
-		}
+		*/
+		out.println(sol % mod);
 		in.close();
+		out.close();
 	}
-	public static void dfs(int start, HashSet<Integer> there) {
-		int next = cows[start];
-		if(there.contains(next)) {
-			HashSet<Integer> combine = new HashSet<Integer>();
-			for(int i : there) {
-				combine.addAll(beenThere[i]);
-			}
-			for(int i : there) {
-				visited[i] = combine.size();
-			}
+	public static int convert(int x) {
+		return x + 10000;
+	}
+	public static int unconvert(int x) {
+		return x - 10000;
+	}
+	public static class Pair implements Comparable<Pair>{
+		int f;
+		int s;
+		public Pair(int x, int y) {
+			f = x;
+			s = y;
 		}
-		else {
-			there.add(next);
-			dfs(next, there);
+		@Override
+		public int compareTo(Pair o) {
+			if(s > o.s) {
+				return 1;
+			}
+			if(s == o.s) {
+				if(f > o.f) {
+					return 1;
+				}
+				else {
+					return -1;
+				}
+			}
+			return -1;
 		}
 	}
 }

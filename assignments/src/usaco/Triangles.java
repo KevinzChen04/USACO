@@ -3,46 +3,108 @@ import java.util.*;
 import java.io.*;
 public class Triangles {
 	static int n;
-	static ArrayList<Pair> points = new ArrayList<Pair>();
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args)throws IOException{
 		BufferedReader in = new BufferedReader(new FileReader("data/usacoData/triangles/triangles.in"));
 		StringTokenizer st = new StringTokenizer(in.readLine());
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("data/usacoData/triangles/triangles.out")));
 		n = Integer.parseInt(st.nextToken());
+		ArrayList<Pair> xpoints = new ArrayList<Pair>();
+		ArrayList<Pair> ypoints = new ArrayList<Pair>();
 		long mod = (long) (Math.pow(10, 9) + 7);
 		long sol = 0;
+		long[][] grid = new long[20001][20001];
+		ArrayList[] hasYcoordinate = new ArrayList[20001];
+		ArrayList[] hasXcoordinate = new ArrayList[20001];
+		for(int i = 0; i < 20001; i++) {
+			hasXcoordinate[i] = new ArrayList<Integer>();
+			hasYcoordinate[i] = new ArrayList<Integer>();
+		}
+		
 		for(int i = 0; i < n; i++) {
 			st = new StringTokenizer(in.readLine());
-			long tempx = Long.parseLong(st.nextToken());
-			long tempy = Long.parseLong(st.nextToken());
-			points.add(new Pair(tempx, tempy));
+			int tempx = Integer.parseInt(st.nextToken());
+			int tempy = Integer.parseInt(st.nextToken());
+			xpoints.add(new Pair(tempx, tempy));
+			ypoints.add(new Pair(tempy, tempx));
 		}
+		Collections.sort(ypoints);
+		Collections.sort(xpoints);
 		for(int i = 0; i < n; i++) {
-			long xsum = 0;
-			long ysum = 0;
-			for(int j = 0; j < n; j++) {
-				if(i == j) {
-					continue;
+			hasYcoordinate[convert(xpoints.get(i).s)].add(convert(xpoints.get(i).f));
+			hasXcoordinate[convert(ypoints.get(i).s)].add(convert(ypoints.get(i).f));
+		}
+		for(int i = 0; i < 20001; i++) {
+			long[] row = new long[hasYcoordinate[i].size()];
+			for(int j = 0; j < hasYcoordinate[i].size(); j++) {
+				if(hasYcoordinate[i].size() == 1) {
+					break;
 				}
-				if(points.get(j).f == points.get(i).f) {
-					xsum += Math.abs(points.get(j).s - points.get(i).s);
+				if(row[0] == 0) {
+					long sum = 0;
+					for(int k = 0; k < hasYcoordinate[i].size(); k++) {
+						sum += Math.abs(unconvert((int)hasYcoordinate[i].get(j)) - unconvert((int)hasYcoordinate[i].get(k)));
+					}
+					row[0] = sum;
+					grid[i][(int) hasYcoordinate[i].get(j)] = row[0];
 				}
-				if(points.get(j).s == points.get(i).s) {
-					ysum += Math.abs(points.get(j).f - points.get(i).f);
+				else {
+					row[j] = row[j - 1] + (2*j - hasYcoordinate[i].size()) * ((int)Math.abs(unconvert((int)hasYcoordinate[i].get(j)) - unconvert((int)hasYcoordinate[i].get(j - 1))));
+					grid[i][(int) hasYcoordinate[i].get(j)] = row[j];
 				}
 			}
-			sol += xsum * ysum;
+		}
+		for(int i = 0; i < 20001; i++) {
+			long[] row = new long[hasXcoordinate[i].size()];
+			for(int j = 0; j < hasXcoordinate[i].size(); j++) {
+				if(hasXcoordinate[i].size() == 1) {
+					break;
+				}
+				if(row[0] == 0) {
+					long sum = 0;
+					for(int k = 0; k < hasXcoordinate[i].size(); k++) {
+						sum += Math.abs(unconvert((int)hasXcoordinate[i].get(j)) - unconvert((int)hasXcoordinate[i].get(k)));
+					}
+					row[0] = sum;
+					sol += grid[(int) hasXcoordinate[i].get(j)][i] * row[0];
+				}
+				else {
+					row[j] = row[j - 1] + (2*j - hasXcoordinate[i].size()) * ((int)Math.abs(unconvert((int)hasXcoordinate[i].get(j)) - unconvert((int)hasXcoordinate[i].get(j - 1))));
+					sol += grid[(int) hasXcoordinate[i].get(j)][i] * row[j];
+				}
+			}
 		}
 		System.out.println(sol % mod);
 		in.close();
 		out.close();
 	}
-	public static class Pair{
-		long f;
-		long s;
-		public Pair(long x, long y) {
-			this.f = x;
-			this.s = y;
+	public static int convert(int x) {
+		return x + 10000;
+	}
+	public static int unconvert(int x) {
+		return x - 10000;
+	}
+	public static class Pair implements Comparable<Pair>{
+		int f;
+		int s;
+		public Pair(int x, int y) {
+			f = x;
+			s = y;
+		}
+		@Override
+		public int compareTo(Pair o) {
+			if(s > o.s) {
+				return 1;
+			}
+			if(s == o.s) {
+				if(f > o.f) {
+					return 1;
+				}
+				else {
+					return -1;
+				}
+			}
+			return -1;
 		}
 	}
 }
