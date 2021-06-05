@@ -12,13 +12,14 @@ public class export {
 		ArrayList<Pair> ypoints = new ArrayList<Pair>();
 		long mod = (long) (Math.pow(10, 9) + 7);
 		long sol = 0;
-		long[][] grid = new long[20001][20001];
+		HashMap<Pair, Long> grid = new HashMap<Pair, Long>();
 		ArrayList[] hasYcoordinate = new ArrayList[20001];
 		ArrayList[] hasXcoordinate = new ArrayList[20001];
 		for(int i = 0; i < 20001; i++) {
 			hasXcoordinate[i] = new ArrayList<Integer>();
 			hasYcoordinate[i] = new ArrayList<Integer>();
 		}
+		
 		for(int i = 0; i < n; i++) {
 			st = new StringTokenizer(in.readLine());
 			int tempx = Integer.parseInt(st.nextToken());
@@ -44,11 +45,11 @@ public class export {
 						sum += Math.abs(unconvert((int)hasYcoordinate[i].get(j)) - unconvert((int)hasYcoordinate[i].get(k)));
 					}
 					row[0] = sum;
-					grid[i][(int) hasYcoordinate[i].get(j)] = row[0];
+					grid.put(new Pair(i, (int) hasYcoordinate[i].get(j)), row[0]);
 				}
 				else {
 					row[j] = row[j - 1] + (2*j - hasYcoordinate[i].size()) * ((int)Math.abs(unconvert((int)hasYcoordinate[i].get(j)) - unconvert((int)hasYcoordinate[i].get(j - 1))));
-					grid[i][(int) hasYcoordinate[i].get(j)] = row[j];
+					grid.put(new Pair(i, (int) hasYcoordinate[i].get(j)), row[j]);
 				}
 			}
 		}
@@ -64,15 +65,20 @@ public class export {
 						sum += Math.abs(unconvert((int)hasXcoordinate[i].get(j)) - unconvert((int)hasXcoordinate[i].get(k)));
 					}
 					row[0] = sum;
-					sol += grid[(int) hasXcoordinate[i].get(j)][i] * row[0];
+					Pair temp = new Pair((int) hasXcoordinate[i].get(j), i);
+					if(grid.containsKey(temp)) {
+						sol += grid.get(temp) * row[0];
+					}
 				}
 				else {
 					row[j] = row[j - 1] + (2*j - hasXcoordinate[i].size()) * ((int)Math.abs(unconvert((int)hasXcoordinate[i].get(j)) - unconvert((int)hasXcoordinate[i].get(j - 1))));
-					sol += grid[(int) hasXcoordinate[i].get(j)][i] * row[j];
+					Pair temp = new Pair((int) hasXcoordinate[i].get(j), i);
+					if(grid.containsKey(temp)) {
+						sol += grid.get(temp) * row[j];
+					}
 				}
 			}
 		}
-		*/
 		out.println(sol % mod);
 		in.close();
 		out.close();
@@ -105,5 +111,20 @@ public class export {
 			}
 			return -1;
 		}
+	    @Override
+	    public boolean equals(Object o) {  
+	        if (o == this) { 
+	            return true; 
+	        } 
+	        if (!(o instanceof Pair)) { 
+	            return false; 
+	        } 
+	        Pair c = (Pair) o; 
+	        return Integer.compare(f, c.f) == 0 && Integer.compare(s, c.s) == 0; 
+	    } 
+	    @Override
+	    public int hashCode() {
+	        return Objects.hash(f);
+	    }
 	}
 }
